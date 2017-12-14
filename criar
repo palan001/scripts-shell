@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Adicionando usuarios no servidor" 
+
+
+for usuaario in $(cat  usuarios.txt); do
+	user=$(cat /etc/passwd | grep ^$usuario | cut -d: -f1)
+test -z $user
+
+		if [ $? -eq 0 ]; then
+			echo "O usuário $user nao está cadastrado"
+			echo "Para cadastrar,  pressione ENTER"
+			read
+			useradd $usuario
+			echo "Usuario cadastrado com sucesso"
+		else
+			echo "Ususario $usuario ja cadastrado"
+		fi
+done
